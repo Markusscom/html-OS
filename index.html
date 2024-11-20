@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>macOS Clone</title>
+    <title>Station OS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
     <div class="top-bar">
@@ -18,17 +20,98 @@
             <span>Help</span>
         </div>
         <div class="status">
-            <span class="time">10:00 AM</span>
+            <div class="status-item" id="status-time">
+                <span class="time" onclick="openTimer()"><i class="fas fa-clock"></i> 10:00 AM</span>
+            </div>
+            <div class="status-item" id="status-date">
+                <span class="date" onclick="openCalendar()"><i class="fas fa-calendar-alt"></i> November 20, 2024</span>
+            </div>
+            <div class="status-item" id="status-battery">
+                <span class="battery" onclick="openBatteryMenu()"><i class="fas fa-battery-full"></i> 100%</span>
+            </div>
+            <div class="status-item" id="status-network">
+                <span class="network" onclick="openWiFiMenu()"><i class="fas fa-wifi"></i> Wi-Fi</span>
+            </div>
         </div>
     </div>
+
     <div class="desktop">
         <div class="dock">
-            <img src="finder.png" alt="Finder">
-            <img src="safari.png" alt="Safari">
-            <img src="messages.png" alt="Messages">
-            <!-- Add more icons as needed -->
+            <img src="finder.png" alt="Finder" class="dock-icon" data-app="finder" onclick="openApp('finder')">
+            <img src="safari.png" alt="Safari" class="dock-icon" data-app="safari" onclick="openApp('safari')">
+            <img src="messages.png" alt="Messages" class="dock-icon" data-app="messages" onclick="openApp('messages')">
         </div>
     </div>
+
+    <!-- Timer Modal -->
+    <div id="timerModal" class="modal">
+        <div class="modal-header" onmousedown="dragMouseDown(event, 'timerModal')">
+            <h2><i class="fas fa-clock"></i> Timer</h2>
+        </div>
+        <div class="modal-content">
+            <input type="number" id="timerInput" placeholder="Minutes" min="1">
+            <button onclick="startTimer()">Start Timer</button>
+            <p id="timerDisplay">00:00</p>
+            <button onclick="closeModal('timerModal')"><i class="fas fa-times"></i> Close</button>
+        </div>
+    </div>
+
+    <!-- Calendar Modal -->
+    <div id="calendarModal" class="modal">
+        <div class="modal-header" onmousedown="dragMouseDown(event, 'calendarModal')">
+            <h2><i class="fas fa-calendar-alt"></i> Calendar</h2>
+        </div>
+        <div class="modal-content">
+            <input type="date" id="calendarInput" class="calendar-input">
+            <button onclick="closeModal('calendarModal')"><i class="fas fa-times"></i> Close</button>
+        </div>
+    </div>
+
+    <!-- Battery Menu Modal -->
+    <div id="batteryMenuModal" class="modal">
+        <div class="modal-header" onmousedown="dragMouseDown(event, 'batteryMenuModal')">
+            <h2><i class="fas fa-battery-full"></i> Battery Settings</h2>
+        </div>
+        <div class="modal-content">
+            <p>Battery Health: 95%</p>
+            <label for="batteryMode">Select Mode:</label>
+            <select id="batteryMode">
+                <option value="eco">Eco Mode (Power Saving)</option>
+                <option value="standard">Standard Mode</option>
+                <option value="performance">Performance Mode</option>
+            </select>
+            <button onclick="closeModal('batteryMenuModal')"><i class="fas fa-times"></i> Close</button>
+        </div>
+    </div>
+
+    <!-- Wi-Fi Menu Modal -->
+    <div id="wifiMenuModal" class="modal">
+        <div class="modal-header" onmousedown="dragMouseDown(event, 'wifiMenuModal')">
+            <h2><i class="fas fa-wifi"></i> Available Wi-Fi Networks</h2>
+        </div>
+        <div class="modal-content">
+            <ul id="wifiList">
+                <!-- Wi-Fi networks will be injected by JS -->
+            </ul>
+            <button onclick="closeModal('wifiMenuModal')"><i class="fas fa-times"></i> Close</button>
+        </div>
+    </div>
+
+    <!-- Wi-Fi Network Details Modal -->
+    <div id="wifiDetailsModal" class="modal">
+        <div class="modal-header" onmousedown="dragMouseDown(event, 'wifiDetailsModal')">
+            <h2><i class="fas fa-wifi"></i> Wi-Fi Network Details</h2>
+        </div>
+        <div class="modal-content">
+            <p><strong>Network:</strong> <span id="wifiNetworkName">Loading...</span></p>
+            <p><strong>IP Address:</strong> <span id="wifiIPAddress">Loading...</span></p>
+            <div class="wifi-actions">
+                <button onclick="connectToWiFi()">Connect</button>
+                <button onclick="closeModal('wifiDetailsModal')"><i class="fas fa-times"></i> Close</button>
+            </div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>

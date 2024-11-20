@@ -1,27 +1,67 @@
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #e66465, #9198e5); /* Adjust colors */
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #e66465, #9198e5); /* Gradient background */
     height: 100vh;
     display: flex;
     flex-direction: column;
 }
 
 .top-bar {
-    background: rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 0.9);
     display: flex;
     justify-content: space-between;
-    padding: 5px 10px;
+    padding: 5px 20px; /* Adjusted padding for better spacing */
     font-size: 14px;
     color: black;
     position: fixed;
-    width: 100%;
+    width: 100%; /* Ensures the header takes full width */
     top: 0;
+    z-index: 10;
+    border-bottom: 1px solid #ddd; /* Light border for better separation */
+    box-sizing: border-box; /* Ensures padding doesn't affect width */
+    left: 0; /* Ensure it starts from the left edge of the screen */
+    right: 0; /* Ensures it ends at the right edge of the screen */
 }
 
-.menu span,
-.status span {
-    margin-right: 10px;
+.menu {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.menu span {
+    cursor: pointer;
+    font-size: 16px;
+    color: #333;
+    transition: all 0.5s ease-in-out; /* Smooth transition */
+}
+
+.menu span:hover {
+    background: linear-gradient(45deg, red, orange, yellow, green, blue, indigo, violet);
+    -webkit-background-clip: text;
+    color: transparent;
+    transform: scale(1.1); /* Adds a little scale effect */
+}
+
+.status {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.status-item span {
+    cursor: pointer;
+    font-size: 16px;
+    color: #333;
+    transition: all 0.5s ease-in-out; /* Smooth transition */
+}
+
+.status-item span:hover {
+    background: linear-gradient(45deg, red, orange, yellow, green, blue, indigo, violet);
+    -webkit-background-clip: text;
+    color: transparent;
+    transform: scale(1.1); /* Adds a scale effect */
 }
 
 .desktop {
@@ -30,24 +70,317 @@ body {
     justify-content: center;
     align-items: flex-end;
     padding-bottom: 10px;
+    position: relative;
+    margin-top: 40px; /* Space for top bar */
 }
 
 .dock {
-    background: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.8);
     border-radius: 15px;
     padding: 10px;
     display: flex;
     gap: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    z-index: 5;
 }
 
-.dock img {
+.dock-icon {
     width: 50px;
     height: 50px;
     border-radius: 10px;
     transition: transform 0.2s;
+    cursor: pointer;
 }
 
-.dock img:hover {
+.dock-icon:hover {
     transform: scale(1.2);
+}
+
+/* Modal Styles */
+.modal {
+    position: fixed;
+    background: rgba(255, 255, 255, 0.85); /* Slightly transparent white background */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    border-radius: 10px;
+    display: none;
+    z-index: 100;
+    width: 300px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(240, 240, 240, 0.8)); /* Gradient effect */
+}
+
+/* Modal Header */
+.modal-header {
+    background: linear-gradient(135deg, #4a90e2, #357ab7); /* Gradient header */
+    color: white;
+    padding: 10px;
+    text-align: center;
+    cursor: move;
+    border-radius: 10px 10px 0 0;
+}
+
+.modal-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modal button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: none;
+    background: #4a90e2;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.modal button:hover {
+    background: #357ab7;
+}
+
+/* Wi-Fi List */
+#wifiList {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+#wifiList li {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0;
+    padding: 8px;
+    background: #f1f1f1;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#wifiList li:hover {
+    background: #e0e0e0;
+}
+
+/* Wi-Fi Details */
+#wifiDetailsModal .modal-content {
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+}
+
+#wifiDetailsModal .modal-header {
+    background: linear-gradient(135deg, #4a90e2, #357ab7); /* Gradient header */
+    color: white;
+    padding: 10px;
+    text-align: center;
+    cursor: move;
+    border-radius: 5px 5px 0 0;
+}
+
+#wifiNetworkName {
+    font-weight: bold;
+    color: #333;
+}
+
+/* Timer Modal */
+#timerModal {
+    position: fixed;
+    background: rgba(255, 255, 255, 0.95);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    border-radius: 10px;
+    display: none;
+    z-index: 100;
+    width: 300px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+#timerDisplay {
+    font-size: 36px;
+    text-align: center;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+/* Input Fields */
+input[type="number"], input[type="date"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+/* Buttons */
+button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    background: #4a90e2;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background: #357ab7;
+}
+
+/* Time, Date, Battery, Network Buttons */
+#status-time, #status-date, #status-battery, #status-network {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    color: #333;
+    font-size: 16px;
+    transition: all 0.5s ease-in-out; /* Smooth transition */
+}
+
+#status-time:hover, #status-date:hover, #status-battery:hover, #status-network:hover {
+    background: linear-gradient(45deg, red, orange, yellow, green, blue, indigo, violet);
+    -webkit-background-clip: text;
+    color: transparent;
+    transform: scale(1.1); /* Adds a scale effect */
+}
+
+/* Icon for Status Bar Items */
+.status-item i {
+    margin-right: 5px;
+    font-size: 18px;
+}
+
+/* Clean up the modal popups to match white/gradient theme */
+.modal {
+    background: rgba(255, 255, 255, 0.9); /* Soft background for modals */
+    border-radius: 10px;
+}
+
+.modal-header {
+    background: linear-gradient(135deg, #4a90e2, #357ab7); /* Gradient header */
+    color: white;
+    padding: 10px;
+    text-align: center;
+    cursor: move;
+    border-radius: 10px 10px 0 0;
+}
+
+/* Add soft border to modal */
+.modal-content {
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Calendar Modal Styling */
+#calendarModal {
+    display: none;
+    position: fixed;
+    background: rgba(255, 255, 255, 0.95);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    border-radius: 10px;
+    width: 350px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+}
+
+#calendarModal .modal-header {
+    background: linear-gradient(135deg, #4a90e2, #357ab7);
+    color: white;
+    padding: 10px;
+    text-align: center;
+    border-radius: 10px 10px 0 0;
+    position: relative;
+}
+
+#calendarModal .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    color: white;
+    font-size: 18px;
+    border: none;
+    background: transparent;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.month-nav {
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #4a90e2;
+    transition: color 0.3s;
+}
+
+.month-nav:hover {
+    color: #357ab7;
+}
+
+#monthName {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.calendar-days {
+    display: flex;
+    flex-direction: column;
+}
+
+.calendar-week {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.calendar-week span {
+    text-align: center;
+    width: 35px;
+    color: #333;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-gap: 5px;
+    text-align: center;
+}
+
+.calendar-grid span {
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.calendar-grid span:hover {
+    background-color: #e0e0e0;
+}
+
+.calendar-grid span.selected {
+    background-color: #4a90e2;
+    color: white;
+    font-weight: bold;
 }
